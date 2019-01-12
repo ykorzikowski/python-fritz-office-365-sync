@@ -12,13 +12,13 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='sample',
+    name='python-fritz-office-365-sync',
     version='0.1.0',
-    description='Sample package for Python-Guide.org',
+    description='A python script to control fritzbox thermostats by office365 calendar',
     long_description=readme,
-    author='Kenneth Reitz',
-    author_email='me@kennethreitz.com',
-    url='https://github.com/kennethreitz/samplemod',
+    author='Yannik Korzikowski',
+    author_email='yannik@korzikowski.de',
+    url='https://github.com/ykorzikowski/python-fritz-office-365-sync',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )

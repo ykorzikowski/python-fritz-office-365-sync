@@ -1,4 +1,4 @@
-# **python-fritz-office-365-sync**  - Office365 to Fritzbox Sync
+# Office365 to Fritzbox Thermostat Sync
 
 # Setup 
 

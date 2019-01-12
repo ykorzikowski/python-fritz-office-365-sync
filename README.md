@@ -2,12 +2,37 @@
 
 # Setup 
 
+Currently the token refreshment is not working properly. See https://github.com/O365/python-o365/issues/167
+
+Also you have to manually compile https://github.com/ykorzikowski/fritzbox-smarthome until the author has accepted my pull request https://github.com/DerMitch/fritzbox-smarthome/issues/20
+
+### Compile Fritzhome
+
+```
+git clone https://github.com/ykorzikowski/fritzbox-smarthome.git
+cd fritzbox-smarthome
+python3 setup.py sdist bdist_wheelpython3 setup.py sdist bdist_wheel
+cp /dist/fritzhome-1.0.6.tar.gz /tmp
+```
+
+### Setup PyEnv
+
+```
+git clone https://github.com/ykorzikowski/python-fritz-office-365-sync
+pyenv install 3.7.0
+cd python-fritz-office-365-sync
+sudo apt-get install python3.5-venv
+./venv3.5/bin/pip3 install /tmp/fritzhome-1.0.6.tar.gz
+./venv3.5/bin/pip install -r requirements.txt
+
+```
+
 ### Setup Cron
 
 The script needs to be scheduled. Best way to do this is to add a cron-job which fires the script every 5 minutes. 
 
 ```
-*/5  *    * * *   pyFritz    /srv/python-fritz-office-365-sync/script.py
+*/5  *    * * *   fritzsync    /srv/python-fritz-office-365-sync/python-fritz-office-365-sync/core.py
 ```
 
 ### Setup Office365 App

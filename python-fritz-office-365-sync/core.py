@@ -29,12 +29,17 @@ class Core(object):
         # Cool down if no heating entries found in calendar
         if len(heating) == 0:
             logging.debug('No heating entry in calendar found. Cooling down all thermostats if they are heating. ')
-            self.cool_down()
+            self.cool_down_all()
 
         # For each heating entry in calendar heat up
+        subjects = []
         for heat in heating:
             logging.info('Found entry "%s"', heat.subject)
             self.heat_up(heat.subject)
+            subjects.append(heat.subject)
+
+        # Cool down thermostats if they are not heated
+        self.cool_down_unless(subjects)
 
         # Every night refresh the token
         if dt.now().time().strftime('%H:%M') == '00:00':
@@ -75,15 +80,32 @@ class Core(object):
                     self.thermostat_heatup(thermostat)
 
     """
-    Sets the temperature of all thermostats to LOW_TEMP if they are currently set to COMFORT_TMEP
+    Cool down every thermostat which is not in unless list
     """
-    def cool_down(self):
+    def cool_down_unless(self, unless):
+        # return if wildcard is found in subjects
+        if conf['CALENDAR_HEAT_ALL_SUBJECT'] in unless:
+            return
+
         thermostats = self.get_thermostats()
         for thermostat in thermostats:
-            if thermostat.target_temperature == conf['HEATING_COMFORT_TEMP']:
-                logging.info('Cooling down %s ...', thermostat.name)
-                thermostat.set_temperature(conf['HEATING_LOW_TEMP'])
+            if thermostat.name not in unless:
+                self.cool_down(thermostat)
 
+    """
+    Sets the temperature of all thermostats to LOW_TEMP if they are currently set to COMFORT_TEMP
+    """
+    def cool_down_all(self):
+        thermostats = self.get_thermostats()
+        for thermostat in thermostats:
+            self.cool_down(thermostat)
+    """
+    Sets the temperature of thermostat to low temp if it is on comfort temp
+    """
+    def cool_down(self, thermostat):
+        if thermostat.target_temperature == conf['HEATING_COMFORT_TEMP']:
+            logging.info('Cooling down %s ...', thermostat.name)
+            thermostat.set_temperature(conf['HEATING_LOW_TEMP'])
     """
     If the temperature has changed manually via app or on the thermostat itself, 
     this method resets the temperature to the HEATING_LOW_TEMP on a given time

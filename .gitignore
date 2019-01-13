@@ -90,4 +90,4 @@ ENV/
 .ropeproject
 
 .idea/
-/python-fritz-office-365-sync/o365_token.txt
+o365_token.txt

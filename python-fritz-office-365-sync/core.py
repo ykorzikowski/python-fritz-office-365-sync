@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+
 from O365 import Account, Connection
 from datetime import datetime as dt
 from datetime import timedelta
@@ -43,7 +45,7 @@ class Core(object):
     """
     def get_thermostats(self):
         if conf['FRITZ_TLS']:
-            fritzbox = FritzBox(conf['FRITZ_IP'],  conf['FRITZ_USER'], conf['FRITZ_PW'], use_tls=conf['FRITZ_TLS'], tls_cert_path='../conf/fritz.crt')
+            fritzbox = FritzBox(conf['FRITZ_IP'],  conf['FRITZ_USER'], conf['FRITZ_PW'], use_tls=conf['FRITZ_TLS'], tls_cert_path='conf/fritz.crt')
         else:
             fritzbox = FritzBox(conf['FRITZ_IP'],  conf['FRITZ_USER'], conf['FRITZ_PW'], use_tls=conf['FRITZ_TLS'])
         fritzbox.login()

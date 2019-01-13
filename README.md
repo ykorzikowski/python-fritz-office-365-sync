@@ -2,9 +2,7 @@
 
 # Setup 
 
-Currently the token refreshment is not working properly. See https://github.com/O365/python-o365/issues/167
-
-Also you have to manually compile https://github.com/ykorzikowski/fritzbox-smarthome until the author has accepted my pull request https://github.com/DerMitch/fritzbox-smarthome/issues/20
+You have to manually compile https://github.com/ykorzikowski/fritzbox-smarthome until the author has accepted my pull request https://github.com/DerMitch/fritzbox-smarthome/issues/20
 
 ### Compile Fritzhome
 

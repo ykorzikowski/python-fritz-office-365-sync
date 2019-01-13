@@ -58,7 +58,7 @@ class Core(object):
         return thermostats
 
     def thermostat_heatup(self, actor):
-        if actor.target_temperature != conf['HEATING_COMFORT_TEMP']:
+        if actor.target_temperature == conf['HEATING_LOW_TEMP']:
             logging.info('Heating up %s ...', actor.name)
             actor.set_temperature(conf['HEATING_COMFORT_TEMP'])
 

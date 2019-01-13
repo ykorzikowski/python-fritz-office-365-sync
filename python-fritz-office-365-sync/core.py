@@ -58,8 +58,9 @@ class Core(object):
         return thermostats
 
     def thermostat_heatup(self, actor):
-        logging.info('Heating up %s ...', actor.name)
-        actor.set_temperature(conf['HEATING_COMFORT_TEMP'])
+        if actor.target_temperature != conf['HEATING_COMFORT_TEMP']:
+            logging.info('Heating up %s ...', actor.name)
+            actor.set_temperature(conf['HEATING_COMFORT_TEMP'])
 
     """
     Sets the temperature of thermostats with matching subject or all thermostats to comfort temperature

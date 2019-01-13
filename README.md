@@ -45,7 +45,7 @@ You should set os variables: `OFFICE_CLIENT_ID` and  `OFFICE_CLIENT_SECRET`. To 
 
 3. Generate a new password (`OFFICE_CLIENT_SECRET`) under `Application Secrets` section
 
-4. Under the `Platform` section, add a new web platform and set `http://localhost:5000` as the redirect URL
+4. Under the `Platform` section, add a new web platform and set `https://outlook.office365.com/owa/` as the redirect URL
 
 5. Under `Microsoft Graph Permissions` section, add the below delegated permissions:
 

@@ -32,7 +32,7 @@ sudo apt-get install python3.5-venv
 The script needs to be scheduled. Best way to do this is to add a cron-job which fires the script every 5 minutes. 
 
 ```
-*/5  *    * * *   fritzsync    /srv/python-fritz-office-365-sync/python-fritz-office-365-sync/core.py
+*/5  *    * * *   fritzsync    /srv/python-fritz-office-365-sync/venv3.5/bin/python -m python-fritz-office-365-sync.core
 ```
 
 ### Setup Office365 App

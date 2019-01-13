@@ -17,7 +17,7 @@ cp /dist/fritzhome-1.0.6.tar.gz /tmp
 
 ```
 git clone https://github.com/ykorzikowski/python-fritz-office-365-sync
-pyenv install 3.7.0
+pyvenv-3.5 ./venv3.5
 cd python-fritz-office-365-sync
 sudo apt-get install python3.5-venv
 ./venv3.5/bin/pip3 install /tmp/fritzhome-1.0.6.tar.gz

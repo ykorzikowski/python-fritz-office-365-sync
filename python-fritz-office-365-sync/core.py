@@ -10,7 +10,8 @@ class Core(object):
     def run(self):
         logging.basicConfig(level=logging.INFO)
         credentials = (conf['OFFICE_CLIENT_ID'], conf['OFFICE_CLIENT_SECRET'])
-        scopes = ['https://graph.microsoft.com/Mail.ReadWrite',
+        scopes = ['offline_access',
+                  'https://graph.microsoft.com/Mail.ReadWrite',
                   'https://graph.microsoft.com/Mail.Send',
                   'https://graph.microsoft.com/Calendars.Read',
                   'https://graph.microsoft.com/Files.ReadWrite',

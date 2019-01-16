@@ -89,5 +89,5 @@ ENV/
 # Rope project settings
 .ropeproject
 
-.idea/
-o365_token.txt
+/.idea/
+/o365_token.txt

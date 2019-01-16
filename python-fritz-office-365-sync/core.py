@@ -41,11 +41,13 @@ class Core(object):
         # Cool down thermostats if they are not heated
         self.cool_down_unless(subjects)
 
+        # auto reset
+        if len(heating) == 0:
+            self.auto_reset()
+
         # Every night refresh the token and cool down to reset manual changes on thermostats
         if dt.now().time().strftime('%H:%M') == '00:00':
             con.refresh_token()
-            if len(heating) == 0:
-                self.cool_down_all()   
 
     """
     Gets all thermostats from fritzbox

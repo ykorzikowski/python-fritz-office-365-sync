@@ -91,3 +91,5 @@ ENV/
 
 /.idea/
 /o365_token.txt
+conf/fritz.crt
+.DS_Store

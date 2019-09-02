@@ -5,6 +5,7 @@ services:
   radiator-fritz-o365-sync:
     container_name: radiator_fritz_o365_sync
     image: ykorzikowski/radiator-fritz-o365:latest
+    restart: always
     environment:
       TZ: 'Europe/Amsterdam'
       FRITZ_IP: 'fritz.box'
@@ -17,8 +18,6 @@ services:
       CALENDAR_HEAT_ALL_SUBJECT: 'HeatAll'
       HEATING_COMFORT_TEMP: '21'
       HEATING_LOW_TEMP: '16'
-      HEATING_AUTO_RESET: 'true'
-      HEATING_AUTO_RESET_TIME: '00:00'
     volumes:
     - '/srv/docker/volumes/radiator-o365/o365_token.txt:/usr/src/app/o365_token.txt'
     #- '/srv/docker/volumes/radiator-o365/fritz.crt:/usr/src/app/conf/fritz.crt'

@@ -16,6 +16,7 @@ services:
   radiator-fritz-o365-sync:
     container_name: radiator_fritz_o365_sync
     image: ykorzikowski/radiator-fritz-o365:latest
+    restart: always
     environment:
       TZ: 'Europe/Amsterdam'
       FRITZ_IP: 'fritz.box'

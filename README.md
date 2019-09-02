@@ -1,5 +1,11 @@
 # Office365 to Fritzbox Thermostat Sync
 
+This little tool gives you the opportunity to control your radiators by your calendar. 
+
+First you need to buy some DECT compatible thermometers for your radiators and connect them to your fritzbox. 
+
+You can either heat all radiators up by a specified subject or create an event for each radiator by using the name of the thermostat. 
+
 ## Using Docker
 
 ```yaml
@@ -136,7 +142,7 @@ Add a new calendar with the outlook account you used to run this script. You nee
 
 # Usage
 
-Create new appointments in the calendar to add heating periods. As subject, use the wildcard, which will heat up all thermostats or specify the name of the thermostat. 
+Create new appointments in the calendar to add heating periods. As subject, use the string you specified in `CALENDAR_HEAT_ALL_SUBJECT`, which will heat up all thermostats or specify the name of the thermostat. 
 
 ## Used Librarys
 

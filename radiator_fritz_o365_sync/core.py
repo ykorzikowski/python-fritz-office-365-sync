@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from O365 import Account, Connection
+from O365 import Account, Connection, FileSystemTokenBackend
 from datetime import datetime as dt
 from datetime import timedelta
 from conf.conf import CONFIG as conf
@@ -10,22 +10,43 @@ import logging
 
 
 class Core:
+
+    @staticmethod
+    def get_credentials():
+        return conf['OFFICE_CLIENT_ID'], conf['OFFICE_CLIENT_SECRET']
+
+    @staticmethod
+    def get_account():
+        return Account(credentials=Core.get_credentials())
+
+    @staticmethod
+    def get_scopes():
+        return ['offline_access',
+                'https://graph.microsoft.com/Mail.ReadWrite',
+                'https://graph.microsoft.com/Mail.Send',
+                'https://graph.microsoft.com/Calendars.Read',
+                'https://graph.microsoft.com/Files.ReadWrite',
+                'https://graph.microsoft.com/User.Read']
+
+    @staticmethod
+    def get_con_obj():
+        credentials = (conf['OFFICE_CLIENT_ID'], conf['OFFICE_CLIENT_SECRET'])
+        scopes = Core.get_scopes()
+
+        return Connection(credentials, scopes=scopes, token_backend=FileSystemTokenBackend(token_filename='o365_token.txt'))
+
     def run(self):
         logging.basicConfig(level=logging.INFO)
-        credentials = (conf['OFFICE_CLIENT_ID'], conf['OFFICE_CLIENT_SECRET'])
-        scopes = ['offline_access',
-                  'https://graph.microsoft.com/Mail.ReadWrite',
-                  'https://graph.microsoft.com/Mail.Send',
-                  'https://graph.microsoft.com/Calendars.Read',
-                  'https://graph.microsoft.com/Files.ReadWrite',
-                  'https://graph.microsoft.com/User.Read']
 
-        con = Connection(credentials, scopes=scopes)
+        con = Core.get_con_obj()
 
-        if not con.check_token_file():
-            self.gen_token_file(con)
+        if not con.token_backend.check_token():
+            logging.error("You have to generate your token file with python -m radiator_fritz_o365_sync.gen_token first!")
+            return 1
 
-        heating = self.query_for_heating_periods(credentials)
+        con.refresh_token()
+
+        heating = self.query_for_heating_periods()
 
         # Cool down if no heating entries found in calendar
         if len(heating) == 0:
@@ -126,8 +147,8 @@ class Core:
                 for thermostat in thermostats:
                     thermostat.set_temperature(conf['HEATING_LOW_TEMP'])
 
-    def query_for_heating_periods(self, credentials):
-        account = Account(credentials=credentials)
+    def query_for_heating_periods(self):
+        account = Core.get_account()
         schedule = account.schedule()
         calendar = schedule.get_calendar(calendar_name=conf['CALENDAR_NAME'])
 
@@ -139,14 +160,6 @@ class Core:
         q.chain('and').on_attribute('end').less_equal(dt.now() + timedelta(minutes=5))
 
         return calendar.get_events(query=q)
-
-    def gen_token_file(self, con):
-        print("No valid token found. Starting authentication process...")
-        print("Please visit the following url and paste the result url into the cli!")
-        url = con.get_authorization_url()
-        print(url)
-        result_url = input('Paste the result url here...')
-        con.request_token(result_url)
 
 if __name__ == "__main__":
     Core().run()

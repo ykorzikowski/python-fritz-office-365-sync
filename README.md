@@ -24,11 +24,20 @@ services:
       HEATING_LOW_TEMP: '16'
       HEATING_AUTO_RESET: 'true'
       HEATING_AUTO_RESET_TIME: '00:00'
-    #volumes:
-    #   - '/srv/docker/volumes/radiator-o365/fritz.crt:/usr/src/app/conf/fritz.crt'
+    volumes:
+    - '/srv/docker/volumes/radiator-o365/o365_token.txt:/usr/src/app/o365_token.txt'
+    #- '/srv/docker/volumes/radiator-o365/fritz.crt:/usr/src/app/conf/fritz.crt'
 ```
 
 Easiest way to set up is using docker in combination with docker-compose. See **Setup O365 & Fritzbox** for more instructions. 
+
+After you set up your fritzbox and your o365 client secrets, you have to generate a token file via the following command: 
+
+```bash
+docker run -i -e OFFICE_CLIENT_ID='' -e OFFICE_CLIENT_SECRET='' ykorzikowski/radiator-fritz-o365 python -mradiator_fritz_o365_sync.gen_token
+```
+
+This will print out a json which has to be stored as presented in docker-compose.yml. 
 
 # Manual Setup 
 

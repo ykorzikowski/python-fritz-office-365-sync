@@ -18,15 +18,15 @@ services:
     image: ykorzikowski/radiator-fritz-o365:latest
     restart: always
     environment:
-      TZ: 'Europe/Amsterdam'
-      FRITZ_IP: 'fritz.box'
-      FRITZ_USER: 'fritzctl'
-      FRITZ_PW: 'myPW'
-      FRITZ_TLS: 'false'
-      OFFICE_CLIENT_ID: ''
-      OFFICE_CLIENT_SECRET: ''
-      CALENDAR_NAME: 'Heating'
-      CALENDAR_HEAT_ALL_SUBJECT: 'HeatAll'
+      TZ=Europe/Amsterdam
+      FRITZ_IP=fritz.box
+      FRITZ_USER=fritzctl
+      FRITZ_PW=myPW
+      FRITZ_TLS=false
+      OFFICE_CLIENT_ID=
+      OFFICE_CLIENT_SECRET=
+      CALENDAR_NAME=Heating
+      CALENDAR_HEAT_ALL_SUBJECT=HeatAll
     volumes:
     - '/srv/docker/volumes/radiator-o365/o365_token.txt:/usr/src/app/o365_token.txt'
     #- '/srv/docker/volumes/radiator-o365/fritz.crt:/usr/src/app/conf/fritz.crt'

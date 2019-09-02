@@ -8,7 +8,8 @@ from conf.conf import CONFIG as conf
 from fritzhome import FritzBox
 import logging
 
-class Core(object):
+
+class Core:
     def run(self):
         logging.basicConfig(level=logging.INFO)
         credentials = (conf['OFFICE_CLIENT_ID'], conf['OFFICE_CLIENT_SECRET'])

@@ -1,0 +1,23 @@
+---
+version: '3'
+
+services:
+  radiator-fritz-o365-sync:
+    container_name: radiator_fritz_o365_sync
+    image: ykorzikowski/radiator-fritz-o365:latest
+    environment:
+      TZ: 'Europe/Amsterdam'
+      FRITZ_IP: 'fritz.box'
+      FRITZ_USER: 'fritzctl'
+      FRITZ_PW: 'myPW'
+      FRITZ_TLS: 'false'
+      OFFICE_CLIENT_ID: ''
+      OFFICE_CLIENT_SECRET: ''
+      CALENDAR_NAME: 'Heating'
+      CALENDAR_HEAT_ALL_SUBJECT: 'HeatAll'
+      HEATING_COMFORT_TEMP: '21'
+      HEATING_LOW_TEMP: '16'
+      HEATING_AUTO_RESET: 'true'
+      HEATING_AUTO_RESET_TIME: '00:00'
+    #volumes:
+    #   - '/srv/docker/volumes/radiator-o365/fritz.crt:/usr/src/app/conf/fritz.crt'

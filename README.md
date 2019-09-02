@@ -1,6 +1,36 @@
 # Office365 to Fritzbox Thermostat Sync
 
-# Setup 
+## Using Docker
+
+```yaml
+---
+version: '3'
+
+services:
+  radiator-fritz-o365-sync:
+    container_name: radiator_fritz_o365_sync
+    image: ykorzikowski/radiator-fritz-o365:latest
+    environment:
+      TZ: 'Europe/Amsterdam'
+      FRITZ_IP: 'fritz.box'
+      FRITZ_USER: 'fritzctl'
+      FRITZ_PW: 'myPW'
+      FRITZ_TLS: 'false'
+      OFFICE_CLIENT_ID: ''
+      OFFICE_CLIENT_SECRET: ''
+      CALENDAR_NAME: 'Heating'
+      CALENDAR_HEAT_ALL_SUBJECT: 'HeatAll'
+      HEATING_COMFORT_TEMP: '21'
+      HEATING_LOW_TEMP: '16'
+      HEATING_AUTO_RESET: 'true'
+      HEATING_AUTO_RESET_TIME: '00:00'
+    #volumes:
+    #   - '/srv/docker/volumes/radiator-o365/fritz.crt:/usr/src/app/conf/fritz.crt'
+```
+
+Easiest way to set up is using docker in combination with docker-compose. See **Setup O365 & Fritzbox** for more instructions. 
+
+# Manual Setup 
 
 You have to manually compile https://github.com/ykorzikowski/fritzbox-smarthome until the author has accepted my pull request https://github.com/DerMitch/fritzbox-smarthome/issues/20
 
@@ -9,7 +39,7 @@ You have to manually compile https://github.com/ykorzikowski/fritzbox-smarthome 
 ```
 git clone https://github.com/ykorzikowski/fritzbox-smarthome.git
 cd fritzbox-smarthome
-python3 setup.py sdist bdist_wheelpython3 setup.py sdist bdist_wheel
+python3 setup.py sdist bdist_wheel
 cp /dist/fritzhome-1.0.6.tar.gz /tmp
 ```
 
@@ -30,8 +60,10 @@ pyvenv-3.5 ./venv3.5
 The script needs to be scheduled. Best way to do this is to add a cron-job which fires the script every 5 minutes. 
 
 ```
-*/5  *    * * *   fritzsync    /srv/python-fritz-office-365-sync/venv3.5/bin/python -m python-fritz-office-365-sync.core
+*/5  *    * * *   fritzsync    /srv/python-fritz-office-365-sync/venv3.5/bin/python -m radiator_fritz_o365_sync.core
 ```
+
+## Setup O365 & Fritzbox
 
 ### Setup Office365 App
 
@@ -57,7 +89,7 @@ You should set os variables: `OFFICE_CLIENT_ID` and  `OFFICE_CLIENT_SECRET`. To 
 
 ### Setup Fritzbox
 
-If you want to access the fritzbox from the internet, you have to set up the myFritz! access first. After this, you have to copy the self-signed certificate from your browser to `conf/fritz.crt` and set `FRITZ_TLS`property to true. 
+If you want to access the fritzbox from the internet, you have to set up the myFritz! access first. After this, you have to copy the self-signed certificate from your browser to `conf/fritz.crt` and set `FRITZ_TLS`property to true. When using docker you have to specify the file via volume. 
 
 Disable the heating time tables by setting the temperature to 16° for all days & times. 
 

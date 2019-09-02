@@ -9,8 +9,8 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=logging.INFO)
 
-    logging.info("started radiator_fritz_o365_sync runner")
+    logging.info("started radiator_fritz_o365_sync runner. Syncing intervall is set to %s seconds", conf['POLLING_INTERVAL'])
     while True:
-        logging.info("syncing with office calendar...")
+        logging.debug("syncing with office calendar...")
         Core().run()
         time.sleep(conf['POLLING_INTERVAL'])

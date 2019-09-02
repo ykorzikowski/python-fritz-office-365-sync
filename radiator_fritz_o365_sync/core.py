@@ -36,13 +36,11 @@ class Core:
         return Connection(credentials, scopes=scopes, token_backend=FileSystemTokenBackend(token_filename='o365_token.txt'))
 
     def run(self):
-        logging.basicConfig(level=logging.INFO)
-
         con = Core.get_con_obj()
 
         if not con.token_backend.check_token():
             logging.error("You have to generate your token file with python -m radiator_fritz_o365_sync.gen_token first!")
-            return 1
+            exit(1)
 
         con.refresh_token()
 
@@ -76,9 +74,9 @@ class Core:
     """
     def get_thermostats(self):
         if conf['FRITZ_TLS']:
-            fritzbox = FritzBox(conf['FRITZ_IP'],  conf['FRITZ_USER'], conf['FRITZ_PW'], use_tls=conf['FRITZ_TLS'], tls_cert_path='conf/fritz.crt')
+            fritzbox = FritzBox(conf['FRITZ_IP'], conf['FRITZ_USER'], conf['FRITZ_PW'], use_tls=conf['FRITZ_TLS'], tls_cert_path='conf/fritz.crt')
         else:
-            fritzbox = FritzBox(conf['FRITZ_IP'],  conf['FRITZ_USER'], conf['FRITZ_PW'], use_tls=conf['FRITZ_TLS'])
+            fritzbox = FritzBox(conf['FRITZ_IP'], conf['FRITZ_USER'], conf['FRITZ_PW'])
         fritzbox.login()
         actors = fritzbox.get_actors()
         thermostats = []
@@ -159,7 +157,7 @@ class Core:
         q = calendar.new_query('start').greater_equal(dt.now())
         q.chain('and').on_attribute('end').less_equal(dt.now() + timedelta(minutes=5))
 
-        return calendar.get_events(query=q)
+        return list(calendar.get_events(query=q))
 
 if __name__ == "__main__":
     Core().run()

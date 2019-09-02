@@ -7,11 +7,11 @@ CONFIG_DOCKER = {
     'FRITZ_USER': os.getenv('FRITZ_USER', 'fritzctl'),
     'FRITZ_PW': os.getenv('FRITZ_PW', 'mypw'),
     # If you are using https, be sure to store the self signed certificate of the fritzbox in the path conf/fritz.crt
-    'FRITZ_TLS': os.getenv('FRITZ_TLS', 'false'),
+    'FRITZ_TLS': os.getenv('FRITZ_TLS', 'false') == 'true',
 
     # the office app to configure
-    'OFFICE_CLIENT_ID': os.getenv('OFFICE_CLIENT_ID',''),
-    'OFFICE_CLIENT_SECRET': os.getenv('OFFICE_CLIENT_SECRET',''),
+    'OFFICE_CLIENT_ID': os.getenv('OFFICE_CLIENT_ID', ''),
+    'OFFICE_CLIENT_SECRET': os.getenv('OFFICE_CLIENT_SECRET', ''),
 
     # The calendar to query
     'CALENDAR_NAME': os.getenv('CALENDAR_NAME', 'Heizen'),
@@ -20,12 +20,15 @@ CONFIG_DOCKER = {
     'CALENDAR_HEAT_ALL_SUBJECT': os.getenv('CALENDAR_HEAT_ALL_SUBJECT', 'Heizen'),
 
     # The comfort and low temperature
-    'HEATING_COMFORT_TEMP': os.getenv('HEATING_COMFORT_TEMP', '21'),
-    'HEATING_LOW_TEMP': os.getenv('HEATING_LOW_TEMP', '16'),
+    'HEATING_COMFORT_TEMP': int(os.getenv('HEATING_COMFORT_TEMP', '21')),
+    'HEATING_LOW_TEMP': int(os.getenv('HEATING_LOW_TEMP', '16')),
 
     # To reset changes made directly at the thermostat or via app
-    'HEATING_AUTO_RESET': os.getenv('HEATING_AUTO_RESET', 'true'),
-    'HEATING_AUTO_RESET_TIME': os.getenv('HEATING_AUTO_RESET_TIME', '00:00')
+    'HEATING_AUTO_RESET': os.getenv('HEATING_AUTO_RESET', 'true') == 'true',
+    'HEATING_AUTO_RESET_TIME': os.getenv('HEATING_AUTO_RESET_TIME', '00:00'),
+
+    'POLLING_INTERVAL': int(os.getenv('POLLING_INTERVAL', '60')),
+    'DEBUG_LOGGING': os.getenv('DEBUG_LOGGING', 'false') == 'true'
 }
 
 CONFIG_NODOCKER = {

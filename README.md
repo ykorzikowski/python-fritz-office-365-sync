@@ -20,10 +20,6 @@ services:
       OFFICE_CLIENT_SECRET: ''
       CALENDAR_NAME: 'Heating'
       CALENDAR_HEAT_ALL_SUBJECT: 'HeatAll'
-      HEATING_COMFORT_TEMP: '21'
-      HEATING_LOW_TEMP: '16'
-      HEATING_AUTO_RESET: 'true'
-      HEATING_AUTO_RESET_TIME: '00:00'
     volumes:
     - '/srv/docker/volumes/radiator-o365/o365_token.txt:/usr/src/app/o365_token.txt'
     #- '/srv/docker/volumes/radiator-o365/fritz.crt:/usr/src/app/conf/fritz.crt'
@@ -38,6 +34,38 @@ docker run -i -e OFFICE_CLIENT_ID='' -e OFFICE_CLIENT_SECRET='' ykorzikowski/rad
 ```
 
 This will print out a json which has to be stored as presented in docker-compose.yml. 
+
+
+
+## Variables Explained
+
+`TZ` : sets the timezone
+
+`FRITZ_IP`: the ip of the fritzbox
+
+`FRITZ_USER`: the username to log in to fritz box
+
+`FRITZ_PW`: password to login to fritz box
+
+`OFFICE_CLIENT_ID`: the client id to access o365 API
+
+`OFFICE_CLIENT_SECRET`: the secret to access o365 API
+
+`CALENDAR_NAME`: the calendar name to query for heating items
+
+`CALENDAR_HEAT_ALL_SUBJECT`: if calendar event is named like this, all radiators will start heating
+
+`HEATING_COMFORT_TEMP`: default to `21`C°. the target temperature all radiators will set to
+
+`HEATING_LOW_TEMP`: default to `16`°C. the target temperature all radiators will set to when heating is disabled
+
+`HEATING_AUTO_RESET`: default `true`. will check radiators temperature at given time and reset them to default. this is useful when the temperature is changed directly on the radiator by a user
+
+`HEATING_AUTO_RESET_TIME`: default to `00:00`. time when the radiator temperature will be reseted
+
+`POLLING_INTERVALL`: default to `60` seconds - time when the calendar gets polled. 
+
+`DEBUG_LOGGING`: default to `false` - will increase logging output 
 
 # Manual Setup 
 
